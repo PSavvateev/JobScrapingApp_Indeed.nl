@@ -12,21 +12,22 @@ import pandas as pd
 source = "indeed.nl"
 
 
-def get_url(position, company_type):
+def get_url(position, company_type, education_level):
     """
-    Generate URL from position and company type: recruiter or direct employer
+    Generate URL from position and company type: recruiter or direct employer; education level
     """
+    employer_sfx = "0bf%3Aexrec()"
+    recruiter_sfx = "0bf%3Aexdh()"
+    master_edu_sfx = "%2Ckf%3Aattr(EXSNN)"
+    any_edu_sfx = ""
 
-    template = "https://nl.indeed.com/jobs?q={}&l"
-    employer_template = "https://nl.indeed.com/jobs?q={}&sc=0bf%3Aexrec()%3B"
-    recruiter_template = "https://nl.indeed.com/jobs?q={}&sc=0bf%3Aexdh()%3B"
+    parameters = {"employer": employer_sfx,
+                  "recruiter": recruiter_sfx,
+                  "master": master_edu_sfx,
+                  "any": any_edu_sfx
+                  }
 
-    if company_type == 'employer':
-        url = employer_template.format(position)
-    elif company_type == 'recruiter':
-        url = recruiter_template.format(position)
-    else:
-        url = template.format(position)
+    url = f"https://nl.indeed.com/vacatures?q={position}&sc={parameters[company_type]}{parameters[education_level]}%3B"
 
     return url
 
@@ -38,7 +39,6 @@ def get_job_date(card):
     :param card:
     :return:
     """
-
     post_str = card.find('span', {'class': 'date'}).text  # text from the footer: days ago was posted
     post_days = re.findall(r'\d+', post_str)  # extracting number of days from posted_str
 
@@ -57,7 +57,7 @@ def get_job_salaries(card):
     :param card:
     :return:
     """
-    salaries = dict()
+
     try:
         salary_str = card.find('div', 'metadata salary-snippet-container').text
         salaries = re.findall(r"\b(\w+[.]\w+)", salary_str)
@@ -82,20 +82,20 @@ def get_record(card):
     job_loc = card.find('div', {'class': 'companyLocation'}).text  # job location
     job_summary = card.find('div', {'class': 'job-snippet'}).text.strip()  # job description
     job_date = get_job_date(card)  # job posting date
-    job_salary = get_job_salaries(card) # job salaries if any
+    job_salary = get_job_salaries(card)  # job salaries if any
 
     record = (job_id, job_title, job_date, job_loc, job_summary, job_salary, job_url, company_name)
 
     return record
 
 
-def get_jobs(position, company_type):
+def get_jobs(position, company_type, education_level):
     """
     creates a DataFrame with all records (scraped jobs), scraping from all pages
 
     """
 
-    url = get_url(position, company_type)
+    url = get_url(position, company_type, education_level)
     records = []
 
     # extract the job data
@@ -105,7 +105,7 @@ def get_jobs(position, company_type):
             try:
                 response = requests.get(url)
                 break
-            except:
+            except ConnectionError:
                 print("Connection refused by the server..")
                 print("Let me sleep for 5 seconds")
                 print("ZZzzzz...")
@@ -144,9 +144,10 @@ def get_jobs(position, company_type):
     # adding to DF columns with search parameters
     search_time = datetime.now().strftime("%d/%m/%Y, %H:%M:%S")
 
-    df.insert(loc=8, column="company_type", value=company_type)
-    df.insert(loc=9, column="search_time", value=search_time)
-    df.insert(loc=10, column="search_position", value=position)
-    df.insert(loc=11, column="source", value=source)
+    df.insert(loc=6, column="job_education", value=education_level)
+    df.insert(loc=9, column="company_type", value=company_type)
+    df.insert(loc=10, column="search_time", value=search_time)
+    df.insert(loc=11, column="search_position", value=position)
+    df.insert(loc=12, column="source", value=source)
 
     return df

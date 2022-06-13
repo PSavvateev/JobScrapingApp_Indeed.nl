@@ -28,9 +28,10 @@ class Logger:
         message = "Session ends."
         logging(time, message, self.logs_lst)
 
-    def start_scraping(self, position, company_type):
+    def start_scraping(self, position, company_type, education_level):
         time = get_time()
-        message = f"Scraping attempt with the key word '{position}' and '{company_type}' company type....."
+        message = f"Scraping attempt with the key word: '{position}', '{company_type}' company type," \
+                  f" education level: {education_level}....."
         logging(time, message, self.logs_lst)
 
     def scraping_result(self, df):

@@ -12,6 +12,7 @@ Haarlem,52.3803,4.6406,Netherlands,NL,Noord-Holland,admin,159134,159134
 Zaanstad,52.4697,4.7767,Netherlands,NL,Noord-Holland,,154037,154037
 Arnhem,51.9833,5.9167,Netherlands,NL,Gelderland,admin,148070,148070
 ’s-Hertogenbosch,51.6833,5.3167,Netherlands,NL,Noord-Brabant,admin,134520,134520
+Den Bosch,51.6833,5.3167,Netherlands,NL,Noord-Brabant,admin,134520,134520
 Leeuwarden,53.2000,5.7833,Netherlands,NL,Fryslân,admin,124084,124084
 Maastricht,50.8483,5.6889,Netherlands,NL,Limburg,admin,122378,122378
 Zwolle,52.5125,6.0944,Netherlands,NL,Overijssel,admin,111805,111805
@@ -250,6 +251,7 @@ Laren,52.2544,5.2317,Netherlands,NL,Noord-Holland,minor,11195,11195
 Doesburg,52.0167,6.1333,Netherlands,NL,Gelderland,minor,11148,11148
 Doornspijk,52.4192,5.8161,Netherlands,NL,Gelderland,,11116,11116
 Schipluiden,51.9833,4.3167,Netherlands,NL,Zuid-Holland,minor,11113,11113
+Schiphol,52.308056,4.764167,Netherlands,NL,Nord-Holland,minor,0,0
 Neede,52.1333,6.6167,Netherlands,NL,Gelderland,,11102,11102
 Diepenveen,52.2894,6.1500,Netherlands,NL,Overijssel,,10838,10838
 Boekel,51.6011,5.6742,Netherlands,NL,Noord-Brabant,minor,10588,10588

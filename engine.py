@@ -5,9 +5,10 @@ from logger import Logger
 
 
 class ScrapingSession:
-    def __init__(self, positions, company_types, red_flags):
+    def __init__(self, positions, company_types, education_level, red_flags):
         self.positions = positions
         self.company_types = company_types
+        self.education_level = education_level
         self.red_flags = red_flags
 
     def run(self):
@@ -21,10 +22,10 @@ class ScrapingSession:
 
             for company_type in self.company_types:
 
-                logger.start_scraping(position, company_type)  # logging each scraping attempt
+                logger.start_scraping(position, company_type, self.education_level)  # logging each scraping attempt
 
                 try:
-                    df = get_jobs(position, company_type)
+                    df = get_jobs(position, company_type, self.education_level)
                 except Exception as inst:
                     logger.error_occurs(inst)
                 else:
@@ -38,10 +39,10 @@ class ScrapingSession:
 
         # data cleansing / formatting
         data_dump.remove_duplicates(field="job_id")  # removing duplicates
-        data_dump.date_fields_format(fields=["job_date", "search_time"])  # formatting datetime fields
+        # data_dump.date_fields_format(fields=["job_date", "search_time"]) -> not needed at this version
         data_dump.add_qualification(red_flags=self.red_flags)  # adding qualification column with True / False
         data_dump.add_job_city(field="job_loc", nl_path="data/nl.csv")  # adding precise geo location
-        data_dump.format_salaries(field="job_salary")
+        # data_dump.format_salaries(field="job_salary") -> not needed at this version
 
         logger.data_formatted(data_dump.df)  # logging formatted data dump information
 

@@ -94,7 +94,6 @@ class DataDump:
         self.df.insert(5, "job_lng", job_lngs)
 
     def format_salaries(self, field):
-        self.df[field].fillna("[]", inplace=True)
         self.df[field] = self.df[field].apply(ast.literal_eval)
 
     def save_to_csv(self, path=None):
@@ -106,4 +105,3 @@ class DataDump:
         suffix = datetime.now().strftime("%d%m%Y_%H%M%S")
         file_name = f"datadump_{suffix}.csv"
         self.df.to_csv(path+file_name, index=False)
-
