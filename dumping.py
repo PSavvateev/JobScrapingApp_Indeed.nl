@@ -59,42 +59,24 @@ class DataDump:
 
         self.df["search_qualified"] = self.df[field].apply(flagging)
 
-    def add_job_city(self, field, nl_path):
+    def add_job_city_id(self, field, db):
         """
         Extract the exact city, lat and lng from 'job_loc'
-        Uses external nl.csv dataset with all NL cities.
-        Adds extra columns to the DF.
+        Uses cities_nl table from SQL database with all NL cities.
+        Relates DF with id from the cities_nl table
         :return: None
         """
 
-        nl = pd.read_csv(nl_path)
-
-        def find_city(loc):
-            for city in nl["city"]:
+        def find_id(loc):
+            for index, city in enumerate(db["city"]):
                 if city in loc:
-                    return city
+                    return db.loc[index, "id"]
 
-        def find_lat(loc):
-            for index, city in enumerate(nl["city"]):
-                if city == loc:
-                    return nl.loc[index, "lat"]
-
-        def find_lng(loc):
-            for index, city in enumerate(nl["city"]):
-                if city == loc:
-                    return nl.loc[index, "lng"]
-
-        job_cities = self.df[field].apply(find_city)
-        self.df.insert(4, "job_city", job_cities)
-
-        job_lats = self.df["job_city"].apply(find_lat)
-        self.df.insert(5, "job_lat", job_lats)
-
-        job_lngs = self.df["job_city"].apply(find_lng)
-        self.df.insert(5, "job_lng", job_lngs)
+        job_ids = self.df[field].apply(find_id)
+        self.df.insert(4, "job_city_id", job_ids)
 
     def format_salaries(self, field):
-        self.df[field] = self.df[field].apply(ast.literal_eval)
+        self.df[field] = self.df[field].astype("string")
 
     def save_to_csv(self, path=None):
         """
