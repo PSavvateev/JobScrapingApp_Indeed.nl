@@ -42,22 +42,22 @@ class DataDump:
 
     def add_qualification(self, red_flags):
         """
-        Qualifies the jobs as relevant (True) or not (False) based on red flags in the summary field.
+        Qualifies the jobs as relevant (True) or not (False) based on red flags
+        in the position abd job summary fields.
         Adds a qualification results column to the dataframe.
 
         :param red_flags: list
         :return: None
         """
         red_flags = [flag.lower() for flag in red_flags]
-        field = "job_summary"
 
-        def flagging(summary):
+        def flagging(field1, field2):
             for flag in red_flags:
-                if flag in summary.lower():
+                if (flag in field1.lower()) or (flag in field2.lower()):
                     return False
             return True
 
-        self.df["search_qualified"] = self.df[field].apply(flagging)
+        self.df["search_qualified"] = self.df.apply(lambda x: flagging(x.job_title, x.job_summary), axis=1)
 
     def add_job_city_id(self, field, db):
         """
