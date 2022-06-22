@@ -1,0 +1,8 @@
+/.ipynb_checkpoints/
+/jupyter_notebooks/
+/venv/
+jupyter_notebooks/Indeed_scraper_clean.ipynb
+jupyter_notebooks/Indeed_sraper_learning.ipynb
+/.idea/
+/test.py
+/.env
