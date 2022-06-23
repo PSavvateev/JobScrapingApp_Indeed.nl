@@ -1,5 +1,5 @@
 from parameters import positions, company_types, education_level, red_flags
-from engine import ScrapingSession
+from main import ScrapingSession
 
 session = ScrapingSession(positions, company_types, education_level, red_flags)
 

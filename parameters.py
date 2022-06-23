@@ -1,9 +1,9 @@
 """
 all required arguments for the program: parameters for the search
 """
+
 # list of any chosen key-words
-positions2 = ["auditor", "accountant", "accountancy", "CPA", "RA"]
-positions = ["financial controller"]
+positions = ["auditor", "accountant", "accountancy", "CPA", "RA"]
 
 # company types should be always 'employer' and 'recruiter'
 company_types = ["employer", "recruiter"]

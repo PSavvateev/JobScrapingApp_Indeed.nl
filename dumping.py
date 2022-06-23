@@ -3,7 +3,6 @@ Functionality for transforming scraping results into a data-dump ready to be upl
 """
 from datetime import datetime
 import pandas as pd
-import ast
 
 
 class DataDump:
@@ -40,6 +39,20 @@ class DataDump:
         self.df.sort_values(by=field, inplace=True)
         self.df.drop_duplicates(subset=[field], keep="first", inplace=True)
 
+    def remove_existent(self, existent_job_ids):
+        """
+        Removes records that already exist in the SQL database jobs
+        :param existent_job_ids: pd.DataFrame
+        :return: None
+        """
+
+        if existent_job_ids.empty:
+            pass
+        else:
+            self.df["exists"] = self.df["job_id"].isin(existent_job_ids["job_id"])
+            self.df = self.df[self.df["exists"] == False]
+            self.df.drop("exists", axis=1, inplace=True)
+
     def add_qualification(self, red_flags):
         """
         Qualifies the jobs as relevant (True) or not (False) based on red flags
@@ -59,7 +72,7 @@ class DataDump:
 
         self.df["search_qualified"] = self.df.apply(lambda x: flagging(x.job_title, x.job_summary), axis=1)
 
-    def add_job_city_id(self, field, db):
+    def add_city_id(self, field, cities):
         """
         Extract the exact city, lat and lng from 'job_loc'
         Uses cities_nl table from SQL database with all NL cities.
@@ -68,12 +81,12 @@ class DataDump:
         """
 
         def find_id(loc):
-            for index, city in enumerate(db["city"]):
+            for index, city in enumerate(cities["city"]):
                 if city in loc:
-                    return db.loc[index, "id"]
+                    return cities.loc[index, "id"]
 
-        job_ids = self.df[field].apply(find_id)
-        self.df.insert(4, "job_city_id", job_ids)
+        city_ids = self.df[field].apply(find_id)
+        self.df.insert(4, "city_id", city_ids)
 
     def format_salaries(self, field):
         self.df[field] = self.df[field].astype("string")
@@ -86,4 +99,4 @@ class DataDump:
         """
         suffix = datetime.now().strftime("%d%m%Y_%H%M%S")
         file_name = f"datadump_{suffix}.csv"
-        self.df.to_csv(path+file_name, index=False)
+        self.df.to_csv(path + file_name, index=False)

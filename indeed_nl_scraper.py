@@ -61,6 +61,7 @@ def get_job_salaries(card):
     try:
         salary_str = card.find('div', 'metadata salary-snippet-container').text
         salaries = re.findall(r"\b(\w+[.]\w+)", salary_str)
+        salaries = [int(x.replace('.', '')) for x in salaries]
 
     except AttributeError:
         salaries = []

@@ -39,14 +39,13 @@ class ScrapingSession:
 
         # data cleansing / formatting
         data_dump.remove_duplicates(field="job_id")  # removing duplicates
-        # data_dump.date_fields_format(fields=["job_date", "search_time"]) -> not needed at this version
+        data_dump.date_fields_format(fields=["job_date", "search_time"])  # formatting datetime fields
         data_dump.add_qualification(red_flags=self.red_flags)  # adding qualification column with True / False
 
         # adding city id from related SQL table
-        database.insert_cities()
         data_dump.add_city_id(field="job_loc", cities=database.get_city_id())
 
-        data_dump.format_salaries(field="job_salary")
+        #data_dump.format_salaries(field="job_salary")
 
         # logging formatted data dump information
         logger.data_formatted(data_dump.df)
@@ -55,8 +54,8 @@ class ScrapingSession:
         data_dump.save_to_csv(path="data_dumps/")
 
         # saving to SQLite DataBase
-        data_dump.remove_existent(job_ids=database.get_job_id())  # removing already existent in DB records
+        data_dump.remove_existent(existent_job_ids=database.get_job_id())  # removing already existent in DB records
         database.insert_jobs(data_dump.df)
 
         logger.end_session()
-        logger.save_to_txt()
+        logger.save_to_txt()  # function is yet to be added
