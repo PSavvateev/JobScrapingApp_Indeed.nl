@@ -6,10 +6,10 @@ from logger import Logger
 
 
 class ScrapingSession:
-    def __init__(self, positions, company_types, education_level, red_flags):
+    def __init__(self, positions, company_types, education_levels, red_flags):
         self.positions = positions
         self.company_types = company_types
-        self.education_level = education_level
+        self.education_levels = education_levels
         self.red_flags = red_flags
 
     def run(self):
@@ -22,17 +22,18 @@ class ScrapingSession:
 
         for position in self.positions:
             for company_type in self.company_types:
-                logger.start_scraping(position, company_type, self.education_level)  # logging each scraping attempt
-                try:
-                    df = indeed_nl_scraper.get_jobs(position, company_type, self.education_level)
-                except Exception as inst:
-                    logger.error_occurs(inst)
-                else:
-                    logger.scraping_result(df)  # logging scraping results
-                    data_dump.merge(df)  # merging all values to the data_dump
-                finally:
-                    time.sleep(5)  # wait for 5 seconds to avoid a block
-                    continue
+                for edu_lvl in self.education_levels:
+                    logger.start_scraping(position, company_type, edu_lvl)  # logging each scraping attempt
+                    try:
+                        df = indeed_nl_scraper.get_jobs(position, company_type, edu_lvl)
+                    except Exception as inst:
+                        logger.error_occurs(inst)
+                    else:
+                        logger.scraping_result(df)  # logging scraping results
+                        data_dump.merge(df)  # merging all values to the data_dump
+                    finally:
+                        time.sleep(5)  # wait for 5 seconds to avoid a block
+                        continue
 
         # logging scraping results
         logger.scraping_result_final(data_dump.df)
@@ -44,8 +45,6 @@ class ScrapingSession:
 
         # adding city id from related SQL table
         data_dump.add_city_id(field="job_loc", cities=database.get_city_id())
-
-        #data_dump.format_salaries(field="job_salary")
 
         # logging formatted data dump information
         logger.data_formatted(data_dump.df)

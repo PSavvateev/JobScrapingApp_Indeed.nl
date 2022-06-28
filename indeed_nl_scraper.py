@@ -19,11 +19,13 @@ def get_url(position, company_type, education_level):
     employer_sfx = "0bf%3Aexrec()"
     recruiter_sfx = "0bf%3Aexdh()"
     master_edu_sfx = "%2Ckf%3Aattr(EXSNN)"
+    bachelor_edu_sfx = "%2Ckf%3Aattr(HFDVW)"
     any_edu_sfx = ""
 
     parameters = {"employer": employer_sfx,
                   "recruiter": recruiter_sfx,
                   "master": master_edu_sfx,
+                  "bachelor": bachelor_edu_sfx,
                   "any": any_edu_sfx
                   }
 
