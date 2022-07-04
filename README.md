@@ -25,12 +25,14 @@ Gets the next information from the website:
 `POSTGRESQL_PORT = '<port>>'`<br/>
 `POSTGRESQL_NAME = '<db name>'`
 <br/><br/>
-3. Set up the tables in the database
-First option: run the **`db_scheme.py`**<br/>
+3. Set up the tables in the database<br>
+First option: <br> 
+Run the **`db_scheme.py`**: <br/>
 `$ python3 db_scheme.py`
 <br/>
-Second option: create tables manually in the POSTGRESQL admin tool using sql scripts from the **`db_scheme.sql`** 
-Then, add the data to the *`cities`* table from **`/data/cities_nl.csv`**
+Second option: <br> 
+Create tables manually in the POSTGRESQL admin tool using sql scripts from the **`db_scheme.sql`** 
+Then, add the data to the *`cities`* table from **`/data/cities_nl.csv`**.
 
 ## How to use
 1. Assign search parameters in the **`parameters.py`**: <br/>

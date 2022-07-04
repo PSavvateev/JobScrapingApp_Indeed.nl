@@ -5,11 +5,13 @@ all required arguments for the program: parameters for the search
 # list of any chosen key-words
 positions = ["auditor", "accountant", "accountancy", "CPA", "RA", "CISSP", "CISA"]
 
+
 # list of company types should always contain 'employer' or 'recruiter' or both
 company_types = ["employer", "recruiter"]
 
 # list of education levels should always contain "master", "bachelor or "any"
 education_level = ["master", "bachelor"]
+
 
 # list of any chosen words, which should not appear in the job description
 red_flags = [

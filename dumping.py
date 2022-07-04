@@ -21,15 +21,6 @@ class DataDump:
         else:
             self.df = df
 
-    def date_fields_format(self, fields):
-        """
-        Formats fields to datetime type.
-
-        :return: None
-        """
-        for field in fields:
-            self.df[field] = pd.to_datetime(self.df[field], infer_datetime_format=True)
-
     def remove_duplicates(self, field):
         """
         Removes duplicates from a df by the 'JobID' field.

@@ -46,7 +46,7 @@ def get_job_date(card):
 
     if post_days:
         # calculated date of job posting if days are mentioned
-        job_date = (datetime.now() - timedelta(days=int(post_days[0]))).strftime("%d/%m/%Y")
+        job_date = (datetime.now() - timedelta(days=int(post_days[0]))).strftime("%Y-%m-%d")
     else:
         job_date = datetime.now().strftime("%d/%m/%Y")  # if days are not mentioned - using today
 
@@ -145,7 +145,7 @@ def get_jobs(position, company_type, education_level):
     df = pd.DataFrame(data=records, columns=columns)
 
     # adding to DF columns with search parameters
-    search_time = datetime.now().strftime("%d/%m/%Y, %H:%M:%S")
+    search_time = datetime.now().strftime("%Y-%m-%d, %H:%M:%S")
 
     df.insert(loc=6, column="job_education", value=education_level)
     df.insert(loc=9, column="company_type", value=company_type)

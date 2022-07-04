@@ -40,7 +40,6 @@ class ScrapingSession:
 
         # data cleansing / formatting
         data_dump.remove_duplicates(field="job_id")  # removing duplicates
-        data_dump.date_fields_format(fields=["job_date", "search_time"])  # formatting datetime fields
         data_dump.add_qualification(red_flags=self.red_flags)  # adding qualification column with True / False
 
         # adding city id from related SQL table
