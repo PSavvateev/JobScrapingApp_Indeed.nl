@@ -48,7 +48,7 @@ def get_job_date(card):
         # calculated date of job posting if days are mentioned
         job_date = (datetime.now() - timedelta(days=int(post_days[0]))).strftime("%Y-%m-%d")
     else:
-        job_date = datetime.now().strftime("%d/%m/%Y")  # if days are not mentioned - using today
+        job_date = datetime.now().strftime("%Y-%m-%d")  # if days are not mentioned - using today
 
     return job_date
 
