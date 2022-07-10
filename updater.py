@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 import requests
 import time
 
-SELECT_JOBID = "SELECT job_id, job_url FROM jobs WHERE (age(current_date, job_date) >= '30 days' )"
+SELECT_JOBID = "SELECT job_id, job_url FROM jobs WHERE (age(current_date, job_date) >= '90 days' )"
 
 SELECT_CITIES = "SELECT id, city, admin_name FROM cities"
 

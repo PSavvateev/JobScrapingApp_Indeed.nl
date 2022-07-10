@@ -26,6 +26,7 @@ CREATE_JOBS_TABLE = text("""CREATE TABLE IF NOT EXISTS jobs (
     job_salary integer[],
     job_education TEXT,
     job_url TEXT,
+    job_status TEXT,
     company_name TEXT,
     company_type TEXT,
     search_time TIMESTAMP,

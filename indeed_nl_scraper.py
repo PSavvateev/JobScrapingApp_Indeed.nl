@@ -148,9 +148,10 @@ def get_jobs(position, company_type, education_level):
     search_time = datetime.now().strftime("%Y-%m-%d, %H:%M:%S")
 
     df.insert(loc=6, column="job_education", value=education_level)
-    df.insert(loc=9, column="company_type", value=company_type)
-    df.insert(loc=10, column="search_time", value=search_time)
-    df.insert(loc=11, column="search_position", value=position)
-    df.insert(loc=12, column="source", value=source)
+    df.insert(loc=8, column="job_status", value='active')
+    df.insert(loc=10, column="company_type", value=company_type)
+    df.insert(loc=11, column="search_time", value=search_time)
+    df.insert(loc=12, column="search_position", value=position)
+    df.insert(loc=13, column="source", value=source)
 
     return df
