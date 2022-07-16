@@ -69,6 +69,12 @@ red_flags = [
         "Trading",
         "Oversight",
         "subcontractor",
-        "fund accounting"
+        "fund accounting",
+        "client service",
+        "customer service",
+        "engineer",
+        "ingenieur",
+        "ISO 1400"
+
 
 ]
